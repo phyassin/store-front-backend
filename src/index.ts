@@ -2,9 +2,9 @@ import express, { Application, Request, Response } from 'express'
 import morgan from 'morgan'
 import * as dotenv from 'dotenv'
 import bodyParser from 'body-parser'
-import lastUser from './controllers/users.control'
-import lastProduct from './controllers/product.control'
-import lastOrder from './controllers/order.control'
+import lastUser from './handler/users.control'
+import lastProduct from './handler/product.control'
+import lastOrder from './handler/order.control'
 
 dotenv.config()
 
