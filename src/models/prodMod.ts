@@ -1,9 +1,9 @@
 import db from '../database/database'
-import producType from '../types/product.type'
+import prodType from '../types/prodType'
 
 class modelProduct {
 
-  async createPro(p: producType): Promise<producType> {
+  async createPro(p: prodType): Promise<prodType> {
     try {
       const connect = await db.connect();
       const sql = `INSERT INTO product (name, price, category) VALUES ($1, $2, $3) returning *`;
@@ -15,7 +15,7 @@ class modelProduct {
     }
   }
 
-  async showAllPro(): Promise<producType[]> {
+  async showAllPro(): Promise<prodType[]> {
     try {
       const connect = await db.connect();
       const sql = 'SELECT * FROM product';
@@ -27,7 +27,7 @@ class modelProduct {
     }
   }
 
-  async showOnePro(id: number): Promise<producType> {
+  async showOnePro(id: number): Promise<prodType> {
     try {
       const connect = await db.connect();
       const sql = `SELECT * FROM product WHERE id= ($1)`;
@@ -39,7 +39,7 @@ class modelProduct {
     }
   }
 
-  async updatePro(id: number, name: string, price: string): Promise<producType> {
+  async updatePro(id: number, name: string, price: string): Promise<prodType> {
     try {
       const connect = await db.connect();
       const sql = 'UPDATE product SET name=($2), price=($3) WHERE id=($1) RETURNING *';
@@ -53,7 +53,7 @@ class modelProduct {
     }
   }
 
-  async deletePro(id: number): Promise<producType> {
+  async deletePro(id: number): Promise<prodType> {
     try {
       const connect = await db.connect();
       const sql = 'DELETE FROM product WHERE id=($1) RETURNING *';

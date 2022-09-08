@@ -1,5 +1,5 @@
 import { Pool } from "pg"
-import config from '../config'
+import config from '../myConfig'
 
 const pool = new Pool({
     host: config.host,

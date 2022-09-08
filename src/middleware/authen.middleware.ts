@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
-import config from '../config'
+import config from '../myConfig'
 
 const authenValidate = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const authHead = req.headers.authorization
         const token = (authHead as string).split(' ')[1]
-        jwt.verify(token, config.secretToken as string)
+        jwt.verify(token, config.private as string)
         next()
     } catch (err) {
         res.status(401)

@@ -22,14 +22,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/* eslint-disable no-console */
 var express_1 = __importDefault(require("express"));
 var morgan_1 = __importDefault(require("morgan"));
 var dotenv = __importStar(require("dotenv"));
 var body_parser_1 = __importDefault(require("body-parser"));
-var users_control_1 = __importDefault(require("./controllers/users.control"));
-var product_control_1 = __importDefault(require("./controllers/product.control"));
-var order_control_1 = __importDefault(require("./controllers/order.control"));
+var usCont_1 = __importDefault(require("./handler/usCont"));
+var prodCont_1 = __importDefault(require("./handler/prodCont"));
+var orCont_1 = __importDefault(require("./handler/orCont"));
 dotenv.config();
 var PORT = process.env.PORT || 3000;
 // create an instance server
@@ -37,9 +36,9 @@ var app = (0, express_1.default)();
 // HTTP request logger middleware
 app.use((0, morgan_1.default)('short'));
 app.use(body_parser_1.default.json());
-(0, users_control_1.default)(app);
-(0, product_control_1.default)(app);
-(0, order_control_1.default)(app);
+(0, usCont_1.default)(app);
+(0, prodCont_1.default)(app);
+(0, orCont_1.default)(app);
 // add routing for / path
 app.get('/', function (req, res) {
     res.json({

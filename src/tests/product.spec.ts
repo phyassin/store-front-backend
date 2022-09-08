@@ -1,7 +1,7 @@
 import supertest from 'supertest'
 import app from '../index'
 import jwt from 'jsonwebtoken';
-import config from '../config';
+import config from '../myConfig';
 
 const request = supertest(app)
 
@@ -11,7 +11,7 @@ const testUser = {
     password: '54545',
 };
 
-const token = jwt.sign(testUser, config.secretToken as unknown as string)
+const token = jwt.sign(testUser, config.private as unknown as string)
 
 describe('Test products', () => {
 

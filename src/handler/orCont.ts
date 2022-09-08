@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import authenValidate from '../middleware/authen.middleware';
-import modelOrder from '../models/order.model';
+import modelOrder from '../models/orMod';
 
 const ModelOrder = new modelOrder();
 // Create order
@@ -19,7 +19,6 @@ const createOrderProduct = async (req: Request, res: Response) => {
         const quantity = req.body.quantity;
         const order_id = req.params.id as unknown as number;
         const product_id = req.body.product_id;
-
         const addPro = await ModelOrder.createOrderProduct(quantity, order_id, product_id);
         res.json(addPro)
     } catch (err) {

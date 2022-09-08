@@ -40,14 +40,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-var config_1 = __importDefault(require("../config"));
+var myConfig_1 = __importDefault(require("../myConfig"));
 var authenValidate = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var authHead, token;
     return __generator(this, function (_a) {
         try {
             authHead = req.headers.authorization;
             token = authHead.split(' ')[1];
-            jsonwebtoken_1.default.verify(token, config_1.default.secretToken);
+            jsonwebtoken_1.default.verify(token, myConfig_1.default.private);
             next();
         }
         catch (err) {

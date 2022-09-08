@@ -1,10 +1,10 @@
 import express, { NextFunction, Request, Response } from 'express'
-import userType from '../types/user.type';
-import modelUser from '../models/user.model';
+import usType from '../types/usType';
+import modelUser from '../models/usMod';
 import jwt from 'jsonwebtoken';
 import authenValidate from '../middleware/authen.middleware'
 import dotenv from 'dotenv';
-import config from "../config";
+import config from "../myConfig";
 
 
 dotenv.config();
@@ -12,7 +12,7 @@ dotenv.config();
 const ModelUser = new modelUser()
 // Create User
 const createUser = async (req: Request, res: Response) => {
-    const creation: userType = {
+    const creation: usType = {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
         password: req.body.password
@@ -64,7 +64,7 @@ const authenticate = async (
     try {
         const { first_name, last_name, password } = req.body;
         const user = await ModelUser.authenticate(first_name, last_name, password);
-        const token = jwt.sign({ user }, config.secretToken as unknown as string)
+        const token = jwt.sign({ user }, config.private as unknown as string)
         if (!user) {
             return res.status(401).json({
                 status: 'error',
@@ -83,8 +83,7 @@ const authenticate = async (
 // Update user by id
 const updUser = async (req: Request, res: Response) => {
     try {
-        //const { id, first_name, last_name, password } = req.body;
-        const creation: userType = {
+        const creation: usType = {
             id: req.params.id as unknown as number,
             first_name: req.body.first_name,
             last_name: req.body.last_name,

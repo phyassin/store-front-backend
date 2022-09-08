@@ -1,6 +1,4 @@
 "use strict";
-/* eslint-disable prettier/prettier */
-/* eslint-disable semi */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -44,14 +42,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var supertest_1 = __importDefault(require("supertest"));
 var index_1 = __importDefault(require("../index"));
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-var config_1 = __importDefault(require("../config"));
+var myConfig_1 = __importDefault(require("../myConfig"));
 var request = (0, supertest_1.default)(index_1.default);
 var testUser = {
     first_name: 'one',
     last_name: 'two',
     password: '54545',
 };
-var token = jsonwebtoken_1.default.sign(testUser, config_1.default.secretToken);
+var token = jsonwebtoken_1.default.sign(testUser, myConfig_1.default.private);
 describe('Test products', function () {
     it('create product and token needed POST /product', function () { return __awaiter(void 0, void 0, void 0, function () {
         var response;

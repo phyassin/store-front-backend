@@ -1,22 +1,22 @@
-import userType from "../types/user.type";
+import usType from "../types/usType";
 import db from '../database/database';
 import bcrypt from 'bcrypt';
-import config from "../config";
+import config from "../myConfig";
 
-const salt = parseInt(config.salt as string, 10)
-const passHash = (password: string) => {
-    return bcrypt.hashSync(
-        `${password}${config.pepper}`,
-        salt
-    );
-}
 class modelUser {
 
-    async createUser(u: userType): Promise<userType> {
+    async createUser(usType: usType): Promise<usType> {
         try {
             const connect = await db.connect();
             const sql = `INSERT INTO users (first_name, last_name, password) values ($1, $2, $3) returning *`;
-            const result = await connect.query(sql, [u.first_name, u.last_name, passHash(u.password)]);
+            const sugar = parseInt(config.sugar as string, 10)
+            const hashword = (pass: string) => {
+                return bcrypt.hashSync(
+                    `${pass}${config.pepp}`,
+                    sugar
+                );
+            }
+            const result = await connect.query(sql, [usType.first_name, usType.last_name, hashword(usType.password)]);
             connect.release();
             return result.rows[0];
         }
@@ -25,7 +25,7 @@ class modelUser {
         }
     }
 
-    async showAllUsers(): Promise<userType[]> {
+    async showAllUsers(): Promise<usType[]> {
         try {
             const connect = await db.connect();
             const sql = `SELECT * FROM users`;
@@ -37,7 +37,7 @@ class modelUser {
         }
     }
 
-    async showUser(id: number): Promise<userType> {
+    async showUser(id: number): Promise<usType> {
         try {
             const connect = await db.connect();
             const sql = `SELECT * FROM users WHERE id = ($1)`;
@@ -50,16 +50,16 @@ class modelUser {
 
     }
 
-    async authenticate(first_name: string, last_name: string, password: string): Promise<userType | null> {
+    async authenticate(first_name: string, last_name: string, password: string): Promise<usType | null> {
         try {
             const connect = await db.connect();
             const sql = `SELECT password FROM users WHERE first_name =($1) AND last_name =($2)`;
             const result = await connect.query(sql, [first_name, last_name]);
 
             if (result.rows.length) {
-                const { password: passHash } = result.rows[0]
+                const { password: hashword } = result.rows[0]
 
-                if (bcrypt.compareSync(`${password}${config.pepper}`, passHash)) {
+                if (bcrypt.compareSync(`${password}${config.pepp}`, hashword)) {
                     const info = await connect.query(
                         `SELECT id, first_name, last_name FROM users WHERE first_name = ($1) AND last_name = ($2)`, [first_name, last_name]
                     );
@@ -73,12 +73,19 @@ class modelUser {
         }
     }
 
-    async updateUser(u: userType): Promise<userType> {
+    async updateUser(usType: usType): Promise<usType> {
         try {
             const connect = await db.connect();
+            const sugar = parseInt(config.sugar as string, 10)
+            const hashword = (pass: string) => {
+                return bcrypt.hashSync(
+                    `${pass}${config.pepp}`,
+                    sugar
+                );
+            }
             const sql =
                 'UPDATE users SET first_name=($2), last_name=($3), password=($4)  WHERE id=($1) RETURNING id, first_name, last_name';
-            const result = await connect.query(sql, [u.id, u.first_name, u.last_name, passHash(u.password)]);
+            const result = await connect.query(sql, [usType.id, usType.first_name, usType.last_name, hashword(usType.password)]);
             connect.release();
             return result.rows[0];
         } catch (error) {
@@ -88,7 +95,7 @@ class modelUser {
         }
     }
 
-    async deleteUser(id: number): Promise<userType> {
+    async deleteUser(id: number): Promise<usType> {
         try {
             const connect = await db.connect();
             const sql =

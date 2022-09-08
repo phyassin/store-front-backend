@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
-import producType from "../types/product.type";
-import modelProduct from "../models/product.model";
+import prodType from "../types/prodType";
+import modelProduct from "../models/prodMod";
 import dotenv from 'dotenv';
 import authenValidate from '../middleware/authen.middleware'
 
@@ -10,7 +10,7 @@ const ModelProduct = new modelProduct();
 // Create product
 const createPro = async (req: Request, res: Response) => {
     try {
-        const creation: producType = {
+        const creation: prodType = {
             name: req.body.name,
             price: req.body.price,
             category: req.body.category

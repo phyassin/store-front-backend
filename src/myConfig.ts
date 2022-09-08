@@ -1,27 +1,25 @@
 import dotenv from 'dotenv'
-
 dotenv.config()
-
 const {
     PORT,
     ENV,
+    SALT_ROUND,
     POSTGRES_HOST,
+    BCRYPT_PASSWORD,
     POSTGRES_DB,
+    TOKEN_SECRET,
     POSTGRES_DB_TEST,
     POSTGRES_USER,
-    POSTGRES_PASSWORD,
-    BCRYPT_PASSWORD,
-    SALT_ROUND,
-    TOKEN_SECRET
+    POSTGRES_PASSWORD
 } = process.env
 
 export default {
     port: PORT,
+    sugar: SALT_ROUND,
     host: POSTGRES_HOST,
-    user: POSTGRES_USER,
-    password: POSTGRES_PASSWORD,
     database: ENV === 'dev' ? POSTGRES_DB : POSTGRES_DB_TEST,
-    pepper: BCRYPT_PASSWORD,
-    salt: SALT_ROUND,
-    secretToken: TOKEN_SECRET
+    pepp: BCRYPT_PASSWORD,
+    user: POSTGRES_USER,
+    private: TOKEN_SECRET,
+    password: POSTGRES_PASSWORD
 }
