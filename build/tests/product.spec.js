@@ -43,7 +43,9 @@ var supertest_1 = __importDefault(require("supertest"));
 var index_1 = __importDefault(require("../index"));
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var myConfig_1 = __importDefault(require("../myConfig"));
+var prodMod_1 = __importDefault(require("../models/prodMod"));
 var request = (0, supertest_1.default)(index_1.default);
+var prodTestModel = new prodMod_1.default();
 var testUser = {
     first_name: 'one',
     last_name: 'two',
@@ -65,6 +67,24 @@ describe('Test products', function () {
                 case 1:
                     response = _a.sent();
                     expect(response.body.data.name).toBe('new product');
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('create second product and token needed POST /product', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request
+                        .post('/product')
+                        .send({
+                        name: 'new sec product',
+                        price: 5455,
+                    })
+                        .set('Authorization', "Bearer ".concat(token))];
+                case 1:
+                    response = _a.sent();
+                    expect(response.body.data.name).toBe('new sec product');
                     return [2 /*return*/];
             }
         });
@@ -113,7 +133,7 @@ describe('Test products', function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, request
-                        .put('/product/1')
+                        .put('/product/2')
                         .send({
                         name: 'updated product',
                         price: 7777,
@@ -131,7 +151,7 @@ describe('Test products', function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, request
-                        .delete('/product/1')
+                        .delete('/product/2')
                         .set('Authorization', "Bearer ".concat(token))];
                 case 1:
                     response = _a.sent();
@@ -140,4 +160,63 @@ describe('Test products', function () {
             }
         });
     }); });
+});
+describe('model products', function () {
+    it('create product', function () {
+        expect(prodTestModel.createPro).toBeDefined;
+    });
+    it('should create this', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var nProduct, result;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    nProduct = {
+                        name: 'new third product',
+                        price: 55555
+                    };
+                    return [4 /*yield*/, prodTestModel.createPro(nProduct)];
+                case 1:
+                    result = _a.sent();
+                    expect(result.price).toEqual(55555);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('index', function () {
+        expect(prodTestModel.showAllPro).toBeDefined;
+    });
+    it('should be these values', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var result;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, prodTestModel.showAllPro()];
+                case 1:
+                    result = _a.sent();
+                    expect(result[0].name == 'new product').toBeTrue;
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('index', function () {
+        expect(prodTestModel.showOnePro).toBeDefined;
+    });
+    it('should be this value', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var result;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, prodTestModel.showOnePro(1)];
+                case 1:
+                    result = _a.sent();
+                    expect(result.name == 'new product').toBeTrue;
+                    expect(result.price).toEqual(545);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('update', function () {
+        expect(prodTestModel.updatePro).toBeDefined;
+    });
+    it('delete', function () {
+        expect(prodTestModel.deletePro).toBeDefined;
+    });
 });

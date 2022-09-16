@@ -43,7 +43,9 @@ var supertest_1 = __importDefault(require("supertest"));
 var index_1 = __importDefault(require("../index"));
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var myConfig_1 = __importDefault(require("../myConfig"));
+var orMod_1 = __importDefault(require("../models/orMod"));
 var request = (0, supertest_1.default)(index_1.default);
+var orTestModel = new orMod_1.default();
 var testUser = {
     first_name: 'one',
     last_name: 'two',
@@ -141,4 +143,50 @@ describe('Test orders', function () {
             }
         });
     }); });
+});
+describe('order model', function () {
+    it('create order', function () {
+        expect(orTestModel.createMyOrder).toBeDefined;
+    });
+    it('should create order', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var nOrder, result;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    nOrder = {
+                        status: 'order model test',
+                        user_id: 2
+                    };
+                    return [4 /*yield*/, orTestModel.createMyOrder(nOrder)];
+                case 1:
+                    result = _a.sent();
+                    expect(result.status).toEqual('order model test');
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('create order product method', function () {
+        expect(orTestModel.createOrderProduct).toBeDefined;
+    });
+    it('show orders', function () {
+        expect(orTestModel.showOrders).toBeDefined;
+    });
+    it('should be these values', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var result;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, orTestModel.showOrders()];
+                case 1:
+                    result = _a.sent();
+                    expect(result[0].status == 'order model test').toBeTrue;
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('update', function () {
+        expect(orTestModel.updateOrder).toBeDefined;
+    });
+    it('delete', function () {
+        expect(orTestModel.deleteOrder).toBeDefined;
+    });
 });

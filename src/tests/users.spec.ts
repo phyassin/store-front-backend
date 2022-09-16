@@ -2,6 +2,8 @@ import supertest from 'supertest'
 import app from '../index'
 import jwt from 'jsonwebtoken';
 import config from '../myConfig';
+import modelUser from "../models/usMod"
+import usType from '../types/usType';
 
 const request = supertest(app)
 
@@ -10,6 +12,8 @@ const testUser = {
     last_name: 'two',
     password: '54545',
 };
+
+const usTestModel = new modelUser()
 
 const token = jwt.sign(testUser, config.private as unknown as string)
 
@@ -70,5 +74,48 @@ describe('test users', () => {
         const response = await request.delete('/user/1');
         expect(response.status).toBe(401);
     });
+})
 
+
+describe('test models', () => {
+
+    it('create', async () => {
+        expect(usTestModel.createUser).toBeDefined
+    })
+    it('created test user model', async () => {
+        const userTesting: usType = {
+            first_name: "number",
+            last_name: "one",
+            password: "passtested"
+        }
+        const result = await usTestModel.createUser(userTesting)
+        expect(result.first_name).toEqual('number')
+    })
+    it("index", () => {
+        expect(usTestModel.showAllUsers).toBeDefined
+    })
+    it('test index', async () => {
+        const result = await usTestModel.showAllUsers()
+        expect(result[0].first_name == 'one').toBeTrue
+        expect(result[1].first_name == 'onee').toBeTrue
+    })
+    it('show', () => {
+        expect(usTestModel.showUser).toBeDefined
+    })
+    it('should be show this value', async () => {
+        const result = await usTestModel.showUser(1)
+        expect(result.first_name == 'one').toBeTrue
+    })
+
+    it('authenticate', () => {
+        expect(usTestModel.authenticate).toBeDefined
+    })
+
+    it('update', () => {
+        expect(usTestModel.updateUser).toBeDefined
+    })
+
+    it('delete', () => {
+        expect(usTestModel.deleteUser).toBeDefined
+    })
 })

@@ -43,7 +43,7 @@ var database_1 = __importDefault(require("../database/database"));
 var modelOrder = /** @class */ (function () {
     function modelOrder() {
     }
-    modelOrder.prototype.createMyOrder = function (status, user_id) {
+    modelOrder.prototype.createMyOrder = function (o) {
         return __awaiter(this, void 0, void 0, function () {
             var connect, sql, result, error_1;
             return __generator(this, function (_a) {
@@ -54,7 +54,7 @@ var modelOrder = /** @class */ (function () {
                     case 1:
                         connect = _a.sent();
                         sql = 'INSERT INTO orders (status,user_id) VALUES($1, $2) RETURNING *';
-                        return [4 /*yield*/, connect.query(sql, [status, user_id])];
+                        return [4 /*yield*/, connect.query(sql, [o.status, o.user_id])];
                     case 2:
                         result = _a.sent();
                         connect.release();

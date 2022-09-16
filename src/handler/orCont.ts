@@ -1,13 +1,17 @@
 import express, { Request, Response } from 'express';
 import authenValidate from '../middleware/authen.middleware';
 import modelOrder from '../models/orMod';
+import orType from '../types/orType';
 
 const ModelOrder = new modelOrder();
 // Create order
 const createMyOrder = async (req: Request, res: Response) => {
     try {
-        const { status, user_id } = req.body;
-        const orderCreated = await ModelOrder.createMyOrder(status, user_id);
+        const creation: orType = {
+            status: req.body.status,
+            user_id: req.body.user_id
+        }
+        const orderCreated = await ModelOrder.createMyOrder(creation);
         res.status(200).send(orderCreated);
     } catch (error) {
         res.status(400).json(error);

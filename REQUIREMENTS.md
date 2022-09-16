@@ -34,27 +34,27 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 #### Product
 
-- id
-- name
-- price
-- category
+- id: integer
+- name: varchar
+- price: numeric
+- category: varchar
 
 #### Users
 
-- id
-- first_name
-- last_name
-- password
+- id: integer
+- first_name: varchar
+- last_name: varchar
+- password: varchar
 
 #### Orders
 
-- id
-- user_id
-- status of order (active or complete)
+- id: integer
+- user_id: integer
+- status of order (active or complete): varchar
 
 #### orderProduct
 
-- id
-- quantity of each product in the order
-- order_id
-- id of each product in the order
+- id: integer
+- quantity of each product in the order: integer
+- order_id: integer
+- id of each product in the order: integer

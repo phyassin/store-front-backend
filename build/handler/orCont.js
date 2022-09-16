@@ -44,19 +44,22 @@ var orMod_1 = __importDefault(require("../models/orMod"));
 var ModelOrder = new orMod_1.default();
 // Create order
 var createMyOrder = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, status_1, user_id, orderCreated, error_1;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
+    var creation, orderCreated, error_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
             case 0:
-                _b.trys.push([0, 2, , 3]);
-                _a = req.body, status_1 = _a.status, user_id = _a.user_id;
-                return [4 /*yield*/, ModelOrder.createMyOrder(status_1, user_id)];
+                _a.trys.push([0, 2, , 3]);
+                creation = {
+                    status: req.body.status,
+                    user_id: req.body.user_id
+                };
+                return [4 /*yield*/, ModelOrder.createMyOrder(creation)];
             case 1:
-                orderCreated = _b.sent();
+                orderCreated = _a.sent();
                 res.status(200).send(orderCreated);
                 return [3 /*break*/, 3];
             case 2:
-                error_1 = _b.sent();
+                error_1 = _a.sent();
                 res.status(400).json(error_1);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
@@ -130,14 +133,14 @@ var showOrdersUser = function (req, res) { return __awaiter(void 0, void 0, void
 }); };
 // Update order by id
 var updateOrder = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var upId, status_2, myOrder, error_3;
+    var upId, status_1, myOrder, error_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
                 upId = req.params.id;
-                status_2 = req.body.status;
-                return [4 /*yield*/, ModelOrder.updateOrder(upId, status_2)];
+                status_1 = req.body.status;
+                return [4 /*yield*/, ModelOrder.updateOrder(upId, status_1)];
             case 1:
                 myOrder = _a.sent();
                 res.status(200).send(myOrder);

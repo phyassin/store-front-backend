@@ -43,12 +43,14 @@ var supertest_1 = __importDefault(require("supertest"));
 var index_1 = __importDefault(require("../index"));
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var myConfig_1 = __importDefault(require("../myConfig"));
+var usMod_1 = __importDefault(require("../models/usMod"));
 var request = (0, supertest_1.default)(index_1.default);
 var testUser = {
     first_name: 'one',
     last_name: 'two',
     password: '54545',
 };
+var usTestModel = new usMod_1.default();
 var token = jsonwebtoken_1.default.sign(testUser, myConfig_1.default.private);
 beforeAll(function () { return __awaiter(void 0, void 0, void 0, function () {
     var add;
@@ -156,4 +158,70 @@ describe('test users', function () {
             }
         });
     }); });
+});
+describe('test models', function () {
+    it('create', function () { return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            expect(usTestModel.createUser).toBeDefined;
+            return [2 /*return*/];
+        });
+    }); });
+    it('created test user model', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var userTesting, result;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    userTesting = {
+                        first_name: "number",
+                        last_name: "one",
+                        password: "passtested"
+                    };
+                    return [4 /*yield*/, usTestModel.createUser(userTesting)];
+                case 1:
+                    result = _a.sent();
+                    expect(result.first_name).toEqual('number');
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it("index", function () {
+        expect(usTestModel.showAllUsers).toBeDefined;
+    });
+    it('test index', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var result;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, usTestModel.showAllUsers()];
+                case 1:
+                    result = _a.sent();
+                    expect(result[0].first_name == 'one').toBeTrue;
+                    expect(result[1].first_name == 'onee').toBeTrue;
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('show', function () {
+        expect(usTestModel.showUser).toBeDefined;
+    });
+    it('should be show this value', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var result;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, usTestModel.showUser(1)];
+                case 1:
+                    result = _a.sent();
+                    expect(result.first_name == 'one').toBeTrue;
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('authenticate', function () {
+        expect(usTestModel.authenticate).toBeDefined;
+    });
+    it('update', function () {
+        expect(usTestModel.updateUser).toBeDefined;
+    });
+    it('delete', function () {
+        expect(usTestModel.deleteUser).toBeDefined;
+    });
 });

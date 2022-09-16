@@ -3,12 +3,12 @@ import orType from '../types/orType'
 
 class modelOrder {
 
-    async createMyOrder(status: string, user_id: number): Promise<orType> {
+    async createMyOrder(o: orType): Promise<orType> {
         try {
             const connect = await db.connect();
             const sql =
                 'INSERT INTO orders (status,user_id) VALUES($1, $2) RETURNING *';
-            const result = await connect.query(sql, [status, user_id]);
+            const result = await connect.query(sql, [o.status, o.user_id]);
             connect.release();
             return result.rows[0];
         } catch (error) {
