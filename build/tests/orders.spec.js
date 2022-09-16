@@ -155,7 +155,7 @@ describe('order model', function () {
                 case 0:
                     nOrder = {
                         status: 'order model test',
-                        user_id: 2
+                        user_id: 1
                     };
                     return [4 /*yield*/, orTestModel.createMyOrder(nOrder)];
                 case 1:

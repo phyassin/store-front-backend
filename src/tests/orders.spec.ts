@@ -78,7 +78,7 @@ describe('order model', () => {
     it('should create order', async () => {
         const nOrder: orType = {
             status: 'order model test',
-            user_id: 2
+            user_id: 1
         }
         const result = await orTestModel.createMyOrder(nOrder)
         expect(result.status).toEqual('order model test')
